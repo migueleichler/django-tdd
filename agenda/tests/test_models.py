@@ -4,7 +4,7 @@ from agenda.models import Compromisso
 from model_mommy import mommy
 
 
-class AgendaModelsTest(TestCase):
+class CompromissoModelTest(TestCase):
 
     def setUp(self):
         self.instance = mommy.make('Compromisso')

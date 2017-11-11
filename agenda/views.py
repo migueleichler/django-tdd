@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from django.views.generic.edit import CreateView
 
-# Create your views here.
+from .models import Compromisso
+
+
+class CreateCompromisso(CreateView):
+    model = Compromisso
+    fields = ('titulo', 'horario', 'local', 'observacao')
