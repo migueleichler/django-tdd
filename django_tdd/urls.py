@@ -20,5 +20,5 @@ from agenda.views import CreateCompromisso
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^compromisso/novo', CreateCompromisso.as_view(), name='compromisso_novo'),
+    url(r'^compromisso/novo/$', CreateCompromisso.as_view(), name='compromisso_novo'),
 ]
