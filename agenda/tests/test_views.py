@@ -1,4 +1,4 @@
-from django.test import TestCase, RequestFactory
+from django.test import TestCase, RequestFactory, Client
 from django.core.urlresolvers import reverse
 
 
@@ -16,17 +16,20 @@ class CompromissoViewTest(TestCase):
                              'local': self.instance.local,
                              'observacao': self.instance.observacao}
         self.factory = RequestFactory()
+        self.client = Client()
 
     def test_get(self):
-        request = self.factory.get(reverse('compromisso_novo'))
-        response = CreateCompromisso.as_view()(request)
+        response = self.client.get(reverse('compromisso_novo'))
 
         self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'compromisso_novo.html')
 
     def test_post(self):
-        request = self.factory.post(reverse('compromisso_novo'), self.request_data)
-
+        request = self.factory.post(reverse('compromisso_novo'),
+                                    self.request_data)
         response = CreateCompromisso.as_view()(request)
-        self.assertEqual(response.status_code, 200)
 
-        self.assertEqual(Compromisso.objects.last().titulo, self.instance.titulo)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(
+            Compromisso.objects.filter(titulo=self.instance.titulo).exists()
+        )
